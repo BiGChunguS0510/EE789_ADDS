@@ -1,0 +1,12 @@
+1.  Run
+	./compile.sh 
+    to compile.
+
+
+2.  Run
+	./tb --stop-time=7200000ns  --wave=run.ghw
+    to run.  This produces a waveform file run.ghw
+
+3.  Use gtkwave to view the waveform.
+
+	gtkwave run.ghw
