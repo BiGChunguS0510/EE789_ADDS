@@ -1,6 +1,7 @@
-*.o
-*.ghw
-tb
-!tb.vhdl
-*.cf
+*
+!compile.sh
+!*.vhdl
+!README
+!README.md
+!*.pdf
 !*/
