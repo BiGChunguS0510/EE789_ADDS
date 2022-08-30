@@ -24,15 +24,13 @@ architecture Obvious of ShiftAndSubtractDivider is
     signal Q: StateSymbol;
     signal tr: std_logic_vector(8 downto 0);
     signal tq: std_logic_vector(7 downto 0);
-    signal temp: std_logic_vector(7 downto 0);
     signal counter: unsigned(3 downto 0);
 begin
-    process(clk, reset, start, Q, tr, tq, temp, counter)
+    process(clk, reset, start, Q, tr, tq, counter)
         variable nextQ : StateSymbol;
         variable done_var:   std_logic;
         variable next_tr: std_logic_vector(8 downto 0);
         variable next_tq: std_logic_vector(7 downto 0);
-        variable next_temp: std_logic_vector(7 downto 0);
         variable next_counter: unsigned(3 downto 0);
         variable remain_var: std_logic_vector(7 downto 0);
         variable quotient_var: std_logic_vector(7 downto 0);
@@ -40,7 +38,6 @@ begin
         nextQ := Q;
         next_tr := tr;
         next_tq := tq;
-        next_temp := temp;
         next_counter := counter;
         done_var := '0';
         remain_var := (others => '0');
@@ -50,15 +47,12 @@ begin
             when rst =>
                 if(start = '1') then
                     next_tr := (others => '0');
-                    next_tq := (others => '0');
-                    next_temp := numerator;
+                    next_tq := numerator;
                     next_counter := (others => '0');
                     nextQ := loop_state;
                 end if;
             
             when loop_state =>
-                next_tr(0) := temp(7);
-                next_temp := (temp(6 downto 0) & '0');
                 if(tr(7 downto 0) >= denominator) then
                     next_tr(8 downto 1) := std_logic_vector(unsigned(tr(7 downto 0)) - unsigned(denominator));
                     next_tq := (tq(6 downto 0) & '1');
@@ -66,6 +60,7 @@ begin
                     next_tr(8 downto 1) := tr(7 downto 0);
                     next_tq := (tq(6 downto 0) & '0');
                 end if;
+                next_tr(0) := tq(7);
 
                 if(counter = 8) then
                     nextQ := done_state;
@@ -79,8 +74,7 @@ begin
                 quotient_var := tq(7 downto 0);
                 if(start = '1') then
                     next_tr := (others => '0');
-                    next_tq := (others => '0');
-                    next_temp := numerator;
+                    next_tq := numerator;
                     next_counter := (others => '0');
                     nextQ := loop_state;
                 end if;
@@ -98,7 +92,6 @@ begin
                    Q <= nextQ;
                    tr <= next_tr;
                    tq <= next_tq;
-                   temp <= next_temp;
                    counter <= next_counter;
             end if;
         end if;
