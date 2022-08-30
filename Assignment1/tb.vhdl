@@ -46,7 +46,8 @@ begin
 					exit;
 				    end if;
 				end loop;
-				assert (to_integer(unsigned(quotient)) = (I/J) and to_integer(unsigned(remain)) = (I mod J)) report
+				assert (to_integer(unsigned(quotient)) = (I/J) and
+				 to_integer(unsigned(remain)) = (I mod J)) report
 					"Mismatch!" severity error;
 			end loop;
 		end loop;
@@ -57,7 +58,8 @@ begin
 
 	dut: ShiftAndSubtractDivider
 		port map (reset => reset, clk => clk,
-				start => start, numerator => numerator, denominator => denominator,
+				start => start, numerator => numerator,
+				denominator => denominator, 
 				done => done, quotient => quotient, remain => remain);
 end TB_arch;
 

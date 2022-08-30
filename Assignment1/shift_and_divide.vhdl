@@ -54,7 +54,8 @@ begin
             
             when loop_state =>
                 if(tr(7 downto 0) >= denominator) then
-                    next_tr(8 downto 1) := std_logic_vector(unsigned(tr(7 downto 0)) - unsigned(denominator));
+                    next_tr(8 downto 1) := std_logic_vector(unsigned(tr(7 downto 0))
+                    - unsigned(denominator));
                     next_tq := (tq(6 downto 0) & '1');
                 else
                     next_tr(8 downto 1) := tr(7 downto 0);
