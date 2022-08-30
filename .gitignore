@@ -1,0 +1,6 @@
+*.o
+*.ghw
+tb
+!tb.vhdl
+*.cf
+!*/
